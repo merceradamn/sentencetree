@@ -14,7 +14,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  sinatra (= 1.4.8)
+  sinatra
 
 BUNDLED WITH
    1.15.3
