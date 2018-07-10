@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -64,13 +65,13 @@
 
   <!-- Sentences -->
   <div class="container" id="explanation">
-    <div class="row">
+    <div class="row row-divided">
       <div class="col">
         <h4>What is a Parse Tree?</h4>
-        <p>A <em>parse tree</em> is an ordered, rooted tree representing the structure of a sentence, broken down to parts-of-speech.</p>
-        <p>
-          The abbreviations used in this diagram are:
-        </p>
+        <p>A <em>parse tree</em> is an ordered, rooted tree representing the structure of a sentence, broken down to parts-of-speech. A tree shows the relationships between words within a sentence.</p>
+      </div>
+      <div class="col">
+        <p>Parts-of-Speech & Shorthand Used:</p>
         <ul>
             <li><b>NP</b>, a noun phrase</li>
             <li><b>VP</b>, a verb phrase</li>
@@ -83,21 +84,25 @@
             <li><b>Adj</b>, an adjective</li>
         </ul>
       </div>
-      <div class="col">
-        <div id="sentence_block_one">
-          <div id="sentence_div_1" style="border: solid 1px black; width:100%; height:500px"></div>
-        </div>
-      </div>
     </div>
   </div>
   <hr>
 
   <div class="container" id="sentences">
-    <div id="sent_one">
-      <h4>How does this work?</h4>
-      <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-      </p>
+    <div class="row" id="sent_one">
+      <div class="col">
+        <div id="sentence_block_one">
+          <div id="sentence_div_1" style="border: solid 1px black; width:100%; height:500px"></div>
+        </div>
+      </div>
+      <div class="col">
+        <h4>How does this work?</h4>
+        <p>As an example, look at the tree to the left. Starting at the bottom, from left to right, you see that “the” and “butterfly” connect to each other as a Noun Phrase (every node between the words and “NP” simply labels their parts of speech). These two words connect as one unit because they are a phrase and, therefore, can be replaced with a single word (the butterfly → it). </p>
+        <p>Moving on to the next word, you have “grew” labeled as its own phrase. (You could potentially simplify grew to did and end up with “The butterfly did” or “It did.”) Ultimately these two phrases form a sentence with the NP being the subject and the VP being the predicate. All of these relationships are expressed through this tree.
+        </p>
+      </div>
     </div>
+    <hr>
 
     <h3>Sentence Two</h3>
     <div id="sentence_block_two">
