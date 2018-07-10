@@ -10,6 +10,9 @@ $(function() {
       Var _____ is where you build the diagram
       _____.model is where you attach it; nodeDataArray: NAME OF VAR OF DIAGRAM
     */
+    // var posTag = "#f68c06"; // For NP/VP
+    // var subTag = "#ccc"; // For Nom/Det/Adj P/Adv P/etc
+    // var wordTag = "#f8f8f8"; // For sentence words
 
     sent_diag_1 =
       $(go.Diagram, "sentence_div_1",
@@ -117,6 +120,74 @@ $(function() {
       $(go.TreeModel,
         { nodeDataArray: sentence_two });
 
+    sent_diag_3 =
+      $(go.Diagram, "sentence_div_3",
+        {
+          allowCopy: false,
+          allowDelete: false,
+          allowMove: true,
+          initialContentAlignment: go.Spot.Center,
+          initialAutoScale: go.Diagram.Uniform,
+          layout:
+            $(FlatTreeLayout,  // custom Layout, defined below
+              { angle: 90,
+                compaction: go.TreeLayout.CompactionNone }),
+          "undoManager.isEnabled": true
+        });
+    sent_diag_3.nodeTemplate =
+      $(go.Node, "Vertical",
+        { selectionObjectName: "BODY" },
+        $(go.Panel, "Auto", { name: "BODY" },
+          $(go.Shape, "RoundedRectangle",
+            new go.Binding("fill"),
+            new go.Binding("stroke")),
+          $(go.TextBlock,
+            { font: "bold 12pt Arial, sans-serif", margin: new go.Margin(4, 2, 2, 2) },
+            new go.Binding("text"))
+        ),
+        $(go.Panel,  // this is underneath the "BODY"
+          { height: 15 },  // always this height, even if the TreeExpanderButton is not visible
+          $("TreeExpanderButton")
+        )
+      );
+    sent_diag_3.linkTemplate =
+      $(go.Link,
+        $(go.Shape, { strokeWidth: 1.5 }));
+    var sentence_three = [
+      { key: 1, text: "Sentence", fill: "#f68c06", stroke: "#4d90fe" },
+      { key: 2, text: "NP", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
+      { key: 3, text: "VP", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
+      { key: 4, text: "Det", fill: "#ccc", stroke: "#4d90fe", parent: 2 },
+      { key: 5, text: "Nom", fill: "#ccc", stroke: "#4d90fe", parent: 2 },
+      { key: 6, text: "Adv P", fill: "#ccc", stroke: "#4d90fe", parent: 3 },
+      { key: 7, text: "VP", fill: "#f68c06", stroke: "#4d90fe", parent: 3 },
+      { key: 8, text: "Adj P", fill: "#ccc", stroke: "#4d90fe", parent: 5 },
+      { key: 9, text: "Nom", fill: "#ccc", stroke: "#4d90fe", parent: 5 },
+      { key: 10, text: "Adv P", fill: "#ccc", stroke: "#4d90fe", parent: 8 },
+      { key: 11, text: "Adj P", fill: "#ccc", stroke: "#4d90fe", parent: 8 },
+      { key: 12, text: "N", fill: "#ccc", stroke: "#4d90fe", parent: 9 },
+      { key: 13, text: "Adv", fill: "#ccc", stroke: "#4d90fe", parent: 6 },
+      { key: 14, text: "V", fill: "#ccc", stroke: "#4d90fe", parent: 7 },
+      { key: 15, text: "NP", fill: "#f68c06", stroke: "#4d90fe", parent: 7 },
+      { key: 16, text: "Adv", fill: "#ccc", stroke: "#4d90fe", parent: 10 },
+      { key: 17, text: "Adj", fill: "#ccc", stroke: "#4d90fe", parent: 11 },
+      { key: 18, text: "Nom", fill: "#ccc", stroke: "#4d90fe", parent: 15 },
+      { key: 19, text: "Adj P", fill: "#ccc", stroke: "#4d90fe", parent: 18 },
+      { key: 20, text: "Nom", fill: "#ccc", stroke: "#4d90fe", parent: 18 },
+      { key: 21, text: "Adj", fill: "#ccc", stroke: "#4d90fe", parent: 19 },
+      { key: 22, text: "N", fill: "#ccc", stroke: "#4d90fe", parent: 20 },
+      { key: 23, text: "A", fill: "#f8f8f8", stroke: "#4d90fe", parent: 4 },
+      { key: 24, text: "very", fill: "#f8f8f8", stroke: "#4d90fe", parent: 16 },
+      { key: 25, text: "diligent", fill: "#f8f8f8", stroke: "#4d90fe", parent: 17 },
+      { key: 26, text: "student", fill: "#f8f8f8", stroke: "#4d90fe", parent: 12 },
+      { key: 27, text: "always", fill: "#f8f8f8", stroke: "#4d90fe", parent: 13 },
+      { key: 28, text: "takes", fill: "#f8f8f8", stroke: "#4d90fe", parent: 14 },
+      { key: 29, text: "extensive", fill: "#f8f8f8", stroke: "#4d90fe", parent: 21 },
+      { key: 30, text: "notes.", fill: "#f8f8f8", stroke: "#4d90fe", parent: 22 }
+    ]
+    sent_diag_3.model =
+      $(go.TreeModel,
+        { nodeDataArray: sentence_three });
   }
 
   // Customize the TreeLayout to position all of the leaf nodes at the same vertical Y position.
