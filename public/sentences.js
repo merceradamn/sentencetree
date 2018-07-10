@@ -3,6 +3,14 @@ $(function() {
 
     if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
     var $ = go.GraphObject.make;  // for conciseness in defining templates
+
+    /* INSTRUCTIONS FOR ADDING DIAGRAMS
+      Connect the diagram with the HTML tag in the page
+      nodeTemplate & linkTemplate are boilerplate
+      Var _____ is where you build the diagram
+      _____.model is where you attach it; nodeDataArray: NAME OF VAR OF DIAGRAM
+    */
+
     sent_diag_1 =
       $(go.Diagram, "sentence_div_1",
         {
@@ -17,22 +25,6 @@ $(function() {
                 compaction: go.TreeLayout.CompactionNone }),
           "undoManager.isEnabled": true
         });
-
-    sent_diag_2 =
-      $(go.Diagram, "sentence_div_2",
-        {
-          allowCopy: false,
-          allowDelete: false,
-          allowMove: true,
-          initialContentAlignment: go.Spot.Center,
-          initialAutoScale: go.Diagram.Uniform,
-          layout:
-            $(FlatTreeLayout,  // custom Layout, defined below
-              { angle: 90,
-                compaction: go.TreeLayout.CompactionNone }),
-          "undoManager.isEnabled": true
-        });
-
     sent_diag_1.nodeTemplate =
       $(go.Node, "Vertical",
         { selectionObjectName: "BODY" },
@@ -49,7 +41,39 @@ $(function() {
           $("TreeExpanderButton")
         )
       );
+    sent_diag_1.linkTemplate =
+      $(go.Link,
+        $(go.Shape, { strokeWidth: 1.5 }));
+    var sentence_one = [
+      { key: 1, text: "Sentence", fill: "#f68c06", stroke: "#4d90fe" },
+      { key: 2, text: "NP", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
+      { key: 3, text: "VP", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
+      { key: 4, text: "Det", fill: "#ccc", stroke: "#4d90fe", parent: 2 },
+      { key: 5, text: "Nom", fill: "#ccc", stroke: "#4d90fe", parent: 2 },
+      { key: 6, text: "V", fill: "#ccc", stroke: "#4d90fe", parent: 3 },
+      { key: 7, text: "N", fill: "#ccc", stroke: "#4d90fe", parent: 5 },
+      { key: 8, text: "The", fill: "#f8f8f8", stroke: "#4d90fe", parent: 4 },
+      { key: 9, text: "butterfly", fill: "#f8f8f8", stroke: "#4d90fe", parent: 7 },
+      { key: 10, text: "grew.", fill: "#f8f8f8", stroke: "#4d90fe", parent: 6 }
+    ]
+    sent_diag_1.model =
+      $(go.TreeModel,
+        { nodeDataArray: sentence_one });
 
+    sent_diag_2 =
+      $(go.Diagram, "sentence_div_2",
+        {
+          allowCopy: false,
+          allowDelete: false,
+          allowMove: true,
+          initialContentAlignment: go.Spot.Center,
+          initialAutoScale: go.Diagram.Uniform,
+          layout:
+            $(FlatTreeLayout,  // custom Layout, defined below
+              { angle: 90,
+                compaction: go.TreeLayout.CompactionNone }),
+          "undoManager.isEnabled": true
+        });
     sent_diag_2.nodeTemplate =
       $(go.Node, "Vertical",
         { selectionObjectName: "BODY" },
@@ -66,29 +90,9 @@ $(function() {
           $("TreeExpanderButton")
         )
       );
-
-    sent_diag_1.linkTemplate =
-      $(go.Link,
-        $(go.Shape, { strokeWidth: 1.5 }));
-
     sent_diag_2.linkTemplate =
       $(go.Link,
         $(go.Shape, { strokeWidth: 1.5 }));
-
-    // set up the nodeDataArray, describing each part of the sentence
-    var sentence_one = [
-      { key: 1, text: "Sentence", fill: "#f68c06", stroke: "#4d90fe" },
-      { key: 2, text: "NP", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
-      { key: 3, text: "VP", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
-      { key: 4, text: "Det", fill: "#ccc", stroke: "#4d90fe", parent: 2 },
-      { key: 5, text: "Nom", fill: "#ccc", stroke: "#4d90fe", parent: 2 },
-      { key: 6, text: "V", fill: "#ccc", stroke: "#4d90fe", parent: 3 },
-      { key: 7, text: "N", fill: "#ccc", stroke: "#4d90fe", parent: 5 },
-      { key: 8, text: "The", fill: "#f8f8f8", stroke: "#4d90fe", parent: 4 },
-      { key: 9, text: "butterfly", fill: "#f8f8f8", stroke: "#4d90fe", parent: 7 },
-      { key: 10, text: "grew.", fill: "#f8f8f8", stroke: "#4d90fe", parent: 6 }
-    ]
-
     var sentence_two = [
       { key: 1, text: "Sentence", fill: "#f68c06", stroke: "#4d90fe" },
       { key: 2, text: "NP", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
@@ -109,18 +113,11 @@ $(function() {
       { key: 17, text: "screamed", fill: "#f8f8f8", stroke: "#4d90fe", parent: 12 },
       { key: 18, text: "loudly.", fill: "#f8f8f8", stroke: "#4d90fe", parent: 13 }
     ]
-
-    // create the Model with data for the tree, and assign to the Diagram
-    sent_diag_1.model =
-      $(go.TreeModel,
-        { nodeDataArray: sentence_one });
-
     sent_diag_2.model =
       $(go.TreeModel,
         { nodeDataArray: sentence_two });
+
   }
-
-
 
   // Customize the TreeLayout to position all of the leaf nodes at the same vertical Y position.
   function FlatTreeLayout() {
